@@ -25,4 +25,9 @@ public class DemoController {
         
             return ResponseEntity.status(401).body("Access denied");
     }
+
+    @RequestMapping("/home")
+    public String home() {
+        return "home page";
+    }
 }
