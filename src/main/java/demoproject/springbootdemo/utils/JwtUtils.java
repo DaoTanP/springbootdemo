@@ -41,13 +41,13 @@ public class JwtUtils {
                 .compact();
     }
 
-    public Claims verify(String authorization) throws Exception {
+    public Claims verify(String authorization) {
 
         try {
             Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authorization).getBody();
             return claims;
         } catch (Exception e) {
-            throw e;
+            return null;
         }
 
     }
