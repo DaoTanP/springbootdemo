@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtUtils {
 
     private static String secret = "This_is_secret";
-    private static long expirationDuration = 60 * 60;
+    private static long expirationDuration = 60;
 
     public String generateJwt(User user) {
 
