@@ -10,9 +10,6 @@ import jakarta.persistence.Id;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    // @GeneratedValue(generator = "uuid2")
-    // @GenericGenerator(name = "uuid2", strategy =
-    // "org.hibernate.id.UUIDGenerator")
     private Integer id;
 
     @Column(nullable = false)
@@ -23,6 +20,17 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    public User() {
+
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+
+    }
 
     public Integer getId() {
         return id;

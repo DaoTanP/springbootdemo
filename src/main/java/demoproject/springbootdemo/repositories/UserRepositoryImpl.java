@@ -1,7 +1,6 @@
 package demoproject.springbootdemo.repositories;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -15,16 +14,31 @@ class UserRepositoryImpl implements UserRepositoryCustom {
     UserRepository userRepository;
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
         Iterator<User> users = userRepository.findAll().iterator();
 
         while (users.hasNext()) {
             User user = users.next();
             if (user.getEmail().equals(email)) {
-                return Optional.of(user);
+                return user;
             }
         }
 
-        return Optional.empty();
+        return null;
+    }
+
+    @Override
+    public boolean validateUser(User user) {
+        if (user.getName() == null ||
+                user.getName() == "" ||
+                user.getEmail() == null ||
+                user.getEmail() == "" ||
+                user.getEmail().indexOf("@") == -1 ||
+                user.getPassword() == null ||
+                user.getPassword() == "") {
+            return false;
+        }
+
+        return true;
     }
 }

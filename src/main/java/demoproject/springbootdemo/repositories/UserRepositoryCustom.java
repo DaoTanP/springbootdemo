@@ -1,9 +1,9 @@
 package demoproject.springbootdemo.repositories;
 
-import java.util.Optional;
-
 import demoproject.springbootdemo.models.User;
 
 public interface UserRepositoryCustom {
-    public Optional<User> findByEmail(String email);
+    public User findByEmail(String email);
+
+    public boolean validateUser(User user);
 }
