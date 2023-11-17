@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import demoproject.springbootdemo.repositories.UserRepository;
 import demoproject.springbootdemo.services.JwtService;
 
 @Controller
@@ -15,16 +16,19 @@ public class DemoController {
     @Autowired
     private JwtService authService;
 
-    @GetMapping("/")
-    public String index() {
-        return "homePage";
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    @RequestMapping("/privateApi")
-    public @ResponseBody ResponseEntity<String> privateApi(
+    @RequestMapping("/privateAccess")
+    public @ResponseBody ResponseEntity<String> privateAccess(
             @RequestHeader(value = "authorization", defaultValue = "") String token) {
-        if (authService.isTokenValid(token))
-            return ResponseEntity.status(200).body("Private access");
+
+        if (authService.isTokenValid(token)) {
+            String email = authService.getEmailFromJWT(token);
+            if (userRepository.findByEmail(email) != null) {
+                return ResponseEntity.status(200).body("Private access");
+            }
+        }
 
         return ResponseEntity.status(401).body("Access denied");
     }

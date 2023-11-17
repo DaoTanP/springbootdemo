@@ -32,13 +32,12 @@ public class JwtServiceImpl implements JwtService {
 
         // claims
         Claims claims = Jwts.claims()
-                .setSubject(user.getId().toString())
+                .setSubject(user.getEmail())
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiredAt);
 
         // optional claims
         claims.put("name", user.getName());
-        claims.put("email", user.getEmail());
 
         // generate jwt using claims
         return Jwts.builder()
